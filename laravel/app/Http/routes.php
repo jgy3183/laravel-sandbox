@@ -13,9 +13,21 @@
 
 Route::get('/', 'WelcomeController@index');
 
-Route::get('home', 'HomeController@index');
+//Route::get('home', 'HomeController@index');
 
-Route::controllers([
+/*
+ * Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
 ]);
+*/
+Route::resource('projects', 'ProjectsController');
+Route::resource('projects.tasks', 'TasksController');
+
+//make pretty the URLs for projects and tasks
+Route::bind('tasks', function($value, $route) {
+	return App\Task::whereSlug($value)->first();
+});
+Route::bind('projects', function($value, $route) {
+	return App\Project::whereSlug($value)->first();
+});
